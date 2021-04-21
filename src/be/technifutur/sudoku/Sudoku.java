@@ -7,7 +7,7 @@ public interface Sudoku {
 
     void addValue(int line, int column, char value);
 
-    void getValue(int line, int column);
+    char getValue(int line, int column);
 
     boolean isValueValid(char value);
 
