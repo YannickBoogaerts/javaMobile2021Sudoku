@@ -2,14 +2,14 @@ package be.technifutur.sudoku;
 
 import java.util.Arrays;
 
-public class Sudoku4X4 implements Sudoku {
+public class SudokuEtoile implements Sudoku {
 
     private char[][] data;
 
-    public Sudoku4X4(){
-        data = new char[4][4];
-        for(int l=0; l< 4; l++){
-            Arrays.fill(data[l],EMPTY);
+    public SudokuEtoile() {
+        data = new char[21][21];
+        for (int l = 0; l < 21; l++) {
+            Arrays.fill(data[l], EMPTY);
         }
     }
 
@@ -31,11 +31,19 @@ public class Sudoku4X4 implements Sudoku {
 
     @Override
     public boolean isValueValid(char value) {
-        return value >= '1' && value <= '4'|| value == EMPTY;
+        return value >= '1' && value <= '9' || value == EMPTY;
     }
 
     @Override
     public boolean isCellValid(int line, int column) {
-        return line >= 0 && line < 4 && column >= 0 && column < 4;
+        return in(line, column, 0, 0, 20, 20)
+                && !in(line, column, 0, 9, 5, 11)
+                && !in(line, column, 9, 0, 11, 5)
+                && !in(line, column, 9, 15, 11, 20)
+                && !in(line, column, 15, 9, 20, 11);
+    }
+
+    private static boolean in(int x, int y, int x1, int y1, int x2, int y2) {
+        return x >= x1 && x <= x2 && y >= y1 && y <= y2;
     }
 }
