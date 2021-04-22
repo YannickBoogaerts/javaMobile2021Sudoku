@@ -4,8 +4,23 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Sudoku");
+
+
+        Sudoku4X4 model = new Sudoku4X4();
+        SudokuVue4X4 vue = new SudokuVue4X4();
+        SudokuControleur controleur = new SudokuControleur();
+
+        vue.setSudoku(model);
+        controleur.setModel(model);
+        controleur.setVue(vue);
+
+        controleur.start();
+
+
+
+
        // TestSudoku4x4();
-        TestSudokuEtoile();
+        //TestSudokuEtoile();
     }
 
     private static void TestSudokuEtoile() {
