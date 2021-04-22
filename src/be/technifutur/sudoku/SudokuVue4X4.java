@@ -1,24 +1,32 @@
 package be.technifutur.sudoku;
 
-public class SudokuVue4X4 implements SudokuVue{
+public class SudokuVue4X4 implements SudokuVue {
 
-    private static final String grille = ("" +
-            "+-----+-----+\n" +
-            "| . . | . . |\n" +
-            "| . . | . . |\n" +
-            "+-----+-----+\n" +
-            "| . . | . . |\n" +
-            "| . . | . . |\n" +
-            "+-----+-----+\n").replace(".","%s");
+    private static final String grille;
+
+    static {
+        grille = new StringBuilder()
+                .append("+-----+-----+\n")
+                .append("| . . | . . |\n")
+                .append("| . . | . . |\n")
+                .append("+-----+-----+\n")
+                .append("| . . | . . |\n")
+                .append("| . . | . . |\n")
+                .append("+-----+-----+\n")
+                .toString()
+                .replace(".", "%s");
+    }
+
 
     private Sudoku4X4 sudo;
 
-    public void setSudoku(Sudoku4X4 sudo) {
-        this.sudo = sudo;
-    }
-
+    @Override
     public Sudoku getSudoku() {
         return sudo;
+    }
+
+    public void setSudoku(Sudoku4X4 param) {
+        this.sudo = param;
     }
 
     public String toString() {
