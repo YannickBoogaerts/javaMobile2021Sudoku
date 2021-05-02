@@ -3,7 +3,7 @@ package be.technifutur.sudoku;
 
 public interface Sudoku {
 
-    char EMPTY =' ';
+    public static final char EMPTY =' ';
 
     void addValue(int line, int column, char value);
 
@@ -12,4 +12,6 @@ public interface Sudoku {
     boolean isValueValid(char value);
 
     boolean isCellValid(int line, int column);
+
+    void lock();
 }

@@ -2,40 +2,55 @@ package be.technifutur.sudoku;
 
 import java.util.Arrays;
 
-public class Sudoku4X4 implements Sudoku {
+public class Sudoku4X4 extends AbstractSudoku {
+    private ValueSet[] ligne;
+    private ValueSet[] carre;
+    private ValueSet[] colonne;
 
-    private char[][] data;
-
-    public Sudoku4X4(){
-        data = new char[4][4];
-        for(int l=0; l< 4; l++){
-            Arrays.fill(data[l],EMPTY);
-        }
+    public Sudoku4X4() {
+        super(4, 4);
     }
 
-    @Override
-    public void addValue(int line, int column, char value) {
-        if (isCellValid(line, column) && isValueValid(value)) {
-            this.data[line][column] = value;
+    private void init() {
+        if(ligne==null) {  // lazy création
+            ligne = new ValueSet[4];
+            carre = new ValueSet[4];
+            colonne = new ValueSet[4];
+            for (int i = 0; i < 4; i++) {
+                ligne[i] = new ValueSet();
+                colonne[i] = new ValueSet();
+                carre[i] = new ValueSet();
+            }
         }
-    }
-
-    @Override
-    public char getValue(int line, int column) {
-        char value = EMPTY;
-        if (isCellValid(line, column)) {
-            value = this.data[line][column];
-        }
-        return value;
     }
 
     @Override
     public boolean isValueValid(char value) {
-        return value >= '1' && value <= '4'|| value == EMPTY;
+        int numericValue = Character.getNumericValue(value);
+        return numericValue >= 1 && numericValue <= 4 || value == EMPTY;
     }
 
     @Override
     public boolean isCellValid(int line, int column) {
         return line >= 0 && line < 4 && column >= 0 && column < 4;
     }
+
+    @Override
+    protected ValueSet getCarre(int l, int c) {
+        init();
+        return carre[l/2*2+c/2];
+    }
+
+    @Override
+    protected ValueSet getColonne(int c) {
+        init();
+        return colonne[c];
+    }
+
+    @Override
+    protected ValueSet getLine(int l) {
+        init();
+        return ligne[l];
+    }
+
 }

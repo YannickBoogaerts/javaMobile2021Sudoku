@@ -1,5 +1,7 @@
 package be.technifutur.sudoku;
 
+import java.io.File;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -13,6 +15,7 @@ public class Main {
         vue.setSudoku(model);
         controleur.setModel(model);
         controleur.setVue(vue);
+        controleur.setFile(new File("sudoku4x4_1.txt"));
 
         controleur.start();
 
