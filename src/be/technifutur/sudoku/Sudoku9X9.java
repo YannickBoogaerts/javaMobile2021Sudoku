@@ -29,10 +29,10 @@ public class Sudoku9X9 extends AbstractSudoku{
     }
     private void init() {
         if (ligne == null) {  // lazy création
-            ligne = new ValueSet[4];
-            carre = new ValueSet[4];
-            colonne = new ValueSet[4];
-            for (int i = 0; i < 4; i++) {
+            ligne = new ValueSet[9];
+            carre = new ValueSet[9];
+            colonne = new ValueSet[9];
+            for (int i = 0; i < 9; i++) {
                 ligne[i] = new ValueSet();
                 colonne[i] = new ValueSet();
                 carre[i] = new ValueSet();
