@@ -4,20 +4,10 @@ public class Cell {
 
     private char value = Sudoku.EMPTY;
     private boolean disponible = true;
-    private ValueSet ligne;  // ensemble des valeurs qui sont présentes actuellement sur la ligne de la cellule
-    private ValueSet colonne;// ensemble des valeurs qui sont présentes actuellement sur la colonne de la cellule
-    private ValueSet carre;  // ensemble des valeurs qui sont présentes actuellement dans le carré de la cellule
+    private ValueSet[] zones; // ensemble des valeurs qui sont présentes actuellement dans une zone de la cellule
 
-    public void setLigne(ValueSet ligne) {
-        this.ligne = ligne;
-    }
-
-    public void setColonne(ValueSet colonne) {
-        this.colonne = colonne;
-    }
-
-    public void setCarre(ValueSet carre) {
-        this.carre = carre;
+    public void setZones(ValueSet[] zones) {
+        this.zones = zones;
     }
 
     public char getValue() {
@@ -25,46 +15,51 @@ public class Cell {
     }
 
     public void setValue(char value) {
-        if (disponible){
-            // erreur cellule verouillée
-        }else if(value == Sudoku.EMPTY) {
+        if (!disponible) {
+            // erreur cellule verrouillée
+        } else if (value == Sudoku.EMPTY) {
             this.removeValue();
-        }else if(this.value != value) {
+        } else if (this.value != value) {
             int num = Character.getNumericValue(value);
             if (valueValid(num)) {
-                if(! isEmpty()) {
-                    removeZone(num);
+                if (!isEmpty()) {
+                    this.removeValue();
                 }
                 addZone(num);
                 this.value = value;
-            }else{
+            } else {
                 // erreur de doublon
+                System.out.println("erreur de doublon");
             }
         }
     }
 
     private void addZone(int num) {
-        ligne.add(num);
-        colonne.add(num);
-        carre.add(num);
-    }
-
-    private void removeZone(int num) {
-        ligne.remove(num);
-        colonne.remove(num);
-        carre.remove(num);
+        for (ValueSet z : zones) {
+            z.add(num);
+        }
     }
 
     private boolean valueValid(int num) {
-        return !ligne.contains(num) &&
-                !colonne.contains(num) &&
-                !carre.contains(num);
+        boolean valid = true;
+        int pos = 0;
+        while (pos < zones.length && valid) {
+            valid &= ! zones[pos].contains(num);
+            pos++;
+        }
+        return valid;
     }
 
     public void removeValue() {
-        if (disponible && ! isEmpty()) {
+        if (disponible && !isEmpty()) {
             removeZone(Character.getNumericValue(value));
             this.value = Sudoku.EMPTY;
+        }
+    }
+
+    private void removeZone(int num) {
+        for (ValueSet z : zones) {
+            z.remove(num);
         }
     }
 

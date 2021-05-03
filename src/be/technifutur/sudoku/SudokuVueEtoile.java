@@ -1,6 +1,6 @@
 package be.technifutur.sudoku;
 
-public class SudokuVueEtoile implements SudokuVue {
+public class SudokuVueEtoile extends AbstractSudokuVue implements SudokuVue {
 
     private static String grille = ("" +
             "+-------+-------+-------+       +-------+-------+-------+\n" +
@@ -35,6 +35,10 @@ public class SudokuVueEtoile implements SudokuVue {
 
     private SudokuEtoile sudo;
 
+    public SudokuVueEtoile(SudokuEtoile sudokuVueEtoile) {
+        this.sudo = sudokuVueEtoile;
+    }
+
     public Sudoku getSudoku() {
         return sudo;
     }
@@ -43,24 +47,23 @@ public class SudokuVueEtoile implements SudokuVue {
         this.sudo = sudo;
     }
 
-    public String toString() {
-        Character[] tab = new Character[21 * 21 - 3 * 6 * 4];
-        int pos = 0;
-        for (int line = 0; line < 21; line++) {
-            for (int column = 0; column < 21; column++) {
-                if(sudo.isCellValid(line,column)) {
-                    char value = sudo.getValue(line, column);
-                    if (value == Sudoku.EMPTY) {
-                        tab[pos] = '.';
-                    } else {
-                        tab[pos] = value;
-                    }
-                    pos++;
-                }else{
-                    //System.out.println("l:"+line+" c:"+column);
-                }
-            }
-        }
-        return String.format(grille, (Object[]) tab);
+    @Override
+    protected String getGrille() {
+        return grille;
+    }
+
+    @Override
+    protected int getMaxColumn() {
+        return 21;
+    }
+
+    @Override
+    protected int getMaxLine() {
+        return 21;
+    }
+
+    @Override
+    protected int getCellNumber() {
+        return 21 * 21 - 4 * 3 * 6;
     }
 }

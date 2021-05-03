@@ -11,19 +11,6 @@ public class Sudoku4X4 extends AbstractSudoku {
         super(4, 4);
     }
 
-    private void init() {
-        if(ligne==null) {  // lazy création
-            ligne = new ValueSet[4];
-            carre = new ValueSet[4];
-            colonne = new ValueSet[4];
-            for (int i = 0; i < 4; i++) {
-                ligne[i] = new ValueSet();
-                colonne[i] = new ValueSet();
-                carre[i] = new ValueSet();
-            }
-        }
-    }
-
     @Override
     public boolean isValueValid(char value) {
         int numericValue = Character.getNumericValue(value);
@@ -36,21 +23,21 @@ public class Sudoku4X4 extends AbstractSudoku {
     }
 
     @Override
-    protected ValueSet getCarre(int l, int c) {
+    protected ValueSet[] getZones(int l, int c) {
         init();
-        return carre[l/2*2+c/2];
+        return new ValueSet[]{ligne[l], colonne[c], carre[l / 2 * 2 + c / 2]};
     }
 
-    @Override
-    protected ValueSet getColonne(int c) {
-        init();
-        return colonne[c];
+    private void init() {
+        if (ligne == null) {  // lazy création
+            ligne = new ValueSet[4];
+            carre = new ValueSet[4];
+            colonne = new ValueSet[4];
+            for (int i = 0; i < 4; i++) {
+                ligne[i] = new ValueSet();
+                colonne[i] = new ValueSet();
+                carre[i] = new ValueSet();
+            }
+        }
     }
-
-    @Override
-    protected ValueSet getLine(int l) {
-        init();
-        return ligne[l];
-    }
-
 }

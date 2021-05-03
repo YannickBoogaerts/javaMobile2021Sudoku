@@ -1,6 +1,6 @@
 package be.technifutur.sudoku;
 
-public class SudokuVue4X4 implements SudokuVue {
+public class SudokuVue4X4 extends AbstractSudokuVue implements SudokuVue {
 
     private static final String grille;
 
@@ -20,6 +20,10 @@ public class SudokuVue4X4 implements SudokuVue {
 
     private Sudoku4X4 sudo;
 
+    public SudokuVue4X4(Sudoku4X4 sudoku4X4) {
+        this.sudo = sudoku4X4;
+    }
+
     @Override
     public Sudoku getSudoku() {
         return sudo;
@@ -29,20 +33,23 @@ public class SudokuVue4X4 implements SudokuVue {
         this.sudo = param;
     }
 
-    public String toString() {
-        Character[] tab = new Character[16];
-        int pos = 0;
-        for (int line = 0; line < 4; line++) {
-            for (int column = 0; column < 4; column++) {
-                char value = sudo.getValue(line, column);
-                if (value == Sudoku.EMPTY) {
-                    tab[pos] = '.';
-                } else {
-                    tab[pos] = value;
-                }
-                pos++;
-            }
-        }
-        return String.format(grille, (Object[]) tab);
+    @Override
+    protected String getGrille() {
+        return grille;
+    }
+
+    @Override
+    protected int getMaxColumn() {
+        return 4;
+    }
+
+    @Override
+    protected int getMaxLine() {
+        return 4;
+    }
+
+    @Override
+    protected int getCellNumber() {
+        return 16;
     }
 }

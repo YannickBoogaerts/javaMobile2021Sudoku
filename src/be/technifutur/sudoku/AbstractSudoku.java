@@ -11,19 +11,13 @@ public abstract class AbstractSudoku implements Sudoku {
         for (int l = 0; l < nbLine; l++) {
             for (int c = 0; c < nbColumn; c++) {
                 data[l][c] = new Cell();
-                data[l][c].setLigne(getLine(l));
-                data[l][c].setColonne(getColonne(c));
-                data[l][c].setCarre(getCarre(l,c));
+                data[l][c].setZones(getZones(l,c));
             }
         }
 
     }
 
-    protected abstract ValueSet getCarre(int l, int c);
-
-    protected abstract ValueSet getColonne(int c);
-
-    protected abstract ValueSet getLine(int l);
+    protected abstract ValueSet[] getZones(int l, int c);
 
     @Override
     public void addValue(int line, int column, char value) {
